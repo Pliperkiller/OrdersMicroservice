@@ -27,4 +27,3 @@ class CreateOrderUsecaseImpl(CreateOrderUsecase):
         builder.calculate_total()
         order = builder.build()
         self.order_repository.create(order)
-
