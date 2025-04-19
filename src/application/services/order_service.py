@@ -2,7 +2,7 @@ from src.domain.ports.input.create_order_usecase import CreateOrderUsecase
 from src.domain.ports.input.delete_order_usecase import DeleteOrderUseCase
 from src.domain.ports.input.get_order_usecase import GetOrderUsecase
 from src.domain.ports.input.update_order_usecase import UpdateOrderUsecase
-from typing import override
+from typing_extensions import override
 
 class OrderService(CreateOrderUsecase,DeleteOrderUseCase,GetOrderUsecase,UpdateOrderUsecase):
     def __init__(self,

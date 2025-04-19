@@ -7,11 +7,11 @@ class OrderRepository(ABC):
         pass
 
     @abstractmethod
-    def get_by_id(self, order_id:int):
+    def get_by_id(self, order_id:int) -> Order:
         pass
 
     @abstractmethod
-    def update(self, order:Order):
+    def update(self, order_id : int ,order:Order):
         pass
 
     @abstractmethod

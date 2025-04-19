@@ -1,4 +1,4 @@
-from src.domain.enrtities.product import Product
+from src.domain.entities.product import Product
 
 class OrderItem:
     def __init__(self, product:Product=None, amount:int=0):

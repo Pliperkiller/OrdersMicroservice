@@ -10,11 +10,7 @@ class OrderItemRepository(ABC):
         pass
         
     @abstractmethod
-    def update(self, order_item:OrderItem):
-        pass
-        
-    @abstractmethod
-    def delete(self, item_id:int):
+    def delete_by_order_id(self, order_id:int):
         pass
         
     @abstractmethod

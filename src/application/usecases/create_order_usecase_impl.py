@@ -1,13 +1,30 @@
 from src.domain.ports.input.create_order_usecase import CreateOrderUsecase
 from src.domain.ports.output.order_repository import OrderRepository
+from src.domain.ports.output.order_item_repository import OrderItemRepository
+from src.domain.entities.order_item import OrderItem
+from src.domain.entities.factories.order_builder import OrderBuilder
 from src.domain.entities.order import Order
-from typing import override
+from typing_extensions import override
 
 class CreateOrderUsecaseImpl(CreateOrderUsecase):
-    def __init__(self, order_repository:OrderRepository):
+    def __init__(self,
+                 order_repository : OrderRepository,
+                 order_item_repository : OrderItemRepository
+                 ):
         self.order_repository = order_repository
+        self.order_item_repository = order_item_repository
 
     @override
-    def create_order(self, order:Order):
+    def create_order(self, client_id : int, order_items : list[OrderItem]):
+        
+        builder = OrderBuilder()
+        builder.set_client_id(client_id)
+
+        for item in order_items:
+            self.order_item_repository.create(item)
+            builder.add_item(item)
+
+        builder.calculate_total()
+        order = builder.build()
         self.order_repository.create(order)
 
