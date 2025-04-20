@@ -5,7 +5,7 @@ from src.infrastructure.database.models.table_base_model import db
 from typing_extensions import override
 
 
-class OrderRepository(OrderRepository):
+class PgOrderRepository(OrderRepository):
     @override
     def create(self, order):
         order_model = OrderModel(

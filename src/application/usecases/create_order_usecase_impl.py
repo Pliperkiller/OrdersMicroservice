@@ -6,6 +6,7 @@ from src.domain.entities.order_item import OrderItem
 from src.domain.entities.factories.order_builder import OrderBuilder
 from src.domain.entities.order import Order
 from typing_extensions import override
+from typing import List, Dict
 
 class CreateOrderUsecaseImpl(CreateOrderUsecase):
     def __init__(self,
@@ -18,13 +19,19 @@ class CreateOrderUsecaseImpl(CreateOrderUsecase):
         self.product_repository = product_repository
 
     @override
-    def create_order(self, client_id : int, order_items : list[OrderItem]):
+    def create_order(self, client_id: int, order_items: List[Dict[str, int]]):
         
         builder = OrderBuilder()
         builder.set_client_id(client_id)
 
         for item in order_items:
-            self.order_item_repository.create(item)
+            product_id = item['product_id']
+            amount = item['amount']
+            product = self.product_repository.get_by_id(product_id)
+
+            order_item = OrderItem(product, amount)
+
+            self.order_item_repository.create(order_item)
             builder.add_item(item)
 
         builder.calculate_total()

@@ -16,7 +16,8 @@ class OrderServiceImpl(OrderService):
                  product_repository: ProductRepository):
 
         self.create_order_usecase = CreateOrderUsecaseImpl(order_repository,
-                                                            order_item_repository)
+                                                            order_item_repository,
+                                                            product_repository)
         self.delete_order_usecase = DeleteOrderUseCaseImpl(order_repository,
                                                             order_item_repository)
         self.get_order_usecase = GetOrderUsecaseImpl(order_repository)

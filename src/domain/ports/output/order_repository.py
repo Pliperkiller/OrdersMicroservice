@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from src.domain.entities.order import Order
+from typing import List
 
 class OrderRepository(ABC):
     @abstractmethod
@@ -7,11 +8,11 @@ class OrderRepository(ABC):
         pass
 
     @abstractmethod
-    def get_by_id(self, order_id:int):
+    def get_by_id(self, order_id:int) -> Order:
         pass
 
     @abstractmethod
-    def update(self, order_id : int ,order:Order):
+    def update(self, order_id : int ,order:Order) -> Order:
         pass
 
     @abstractmethod
@@ -19,5 +20,5 @@ class OrderRepository(ABC):
         pass
 
     @abstractmethod
-    def get_all(self):
+    def get_all(self) -> List[Order]:
         pass
