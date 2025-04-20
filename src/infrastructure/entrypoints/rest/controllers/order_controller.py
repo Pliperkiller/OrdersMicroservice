@@ -1,4 +1,4 @@
-from application.services.order_service import OrderService
+from src.application.services.order_service import OrderService
 from typing import List
 
 class OrderController:

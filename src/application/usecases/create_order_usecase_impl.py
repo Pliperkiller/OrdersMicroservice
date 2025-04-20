@@ -24,16 +24,22 @@ class CreateOrderUsecaseImpl(CreateOrderUsecase):
         builder = OrderBuilder()
         builder.set_client_id(client_id)
 
+        items = []
         for item in order_items:
             product_id = item['product_id']
             amount = item['amount']
             product = self.product_repository.get_by_id(product_id)
-
+            
             order_item = OrderItem(product, amount)
+            items.append(order_item)
 
-            self.order_item_repository.create(order_item)
-            builder.add_item(item)
+            builder.add_item(order_item)
 
         builder.calculate_total()
         order = builder.build()
         self.order_repository.create(order)
+
+        for item in items:
+            self.order_item_repository.create(item)
+
+        return order

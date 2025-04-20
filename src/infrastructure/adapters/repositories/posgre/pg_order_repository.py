@@ -1,5 +1,6 @@
 from src.domain.ports.output.order_repository import OrderRepository
 from src.domain.entities.order import Order
+from src.domain.value_objects.order_status import OrderStatus, get_order_status_from_str
 from src.infrastructure.database.models.order_model import OrderModel
 from src.infrastructure.database.models.table_base_model import db
 from typing_extensions import override
@@ -10,7 +11,7 @@ class PgOrderRepository(OrderRepository):
     def create(self, order):
         order_model = OrderModel(
             client_id=order.client_id,
-            status=order.status,
+            status=order.status.value,
             total_value=order.total_value
         )
         

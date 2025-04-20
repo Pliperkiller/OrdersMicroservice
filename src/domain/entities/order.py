@@ -1,7 +1,7 @@
 from src.domain.value_objects.order_status import OrderStatus
 from src.domain.entities.order_item import OrderItem
 class Order:
-    _id_counter = 0
+    _id_counter = 1
 
     def __init__(self, 
                  client_id : int=None, 
@@ -33,7 +33,7 @@ class Order:
         return {
             "id": self.id,
             "client_id": self.client_id,
-            "status": self.status,
+            "status": self.status.value,
             "items": [item.to_dict() for item in self.items],
             "total_value": self.total_value
         }

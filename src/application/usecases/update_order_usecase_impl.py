@@ -1,4 +1,4 @@
-from domain.value_objects.order_status import get_order_status_from_str
+from src.domain.value_objects.order_status import get_order_status_from_str
 from src.domain.ports.input.update_order_usecase import UpdateOrderUsecase
 from src.domain.ports.output.order_repository import OrderRepository
 from src.domain.entities.order import Order
