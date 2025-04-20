@@ -7,12 +7,12 @@ from typing_extensions import override
 
 class PgOrderItemRepository(OrderItemRepository):
     @override
-    def create(self, order_item):
+    def create(self, order_id , order_item):
         order_item_model = OrderItemModel(
-            order_id=order_item.id,
-            product_id=order_item.product.id,
-            amount=order_item.amount,
-            subtotal=order_item.subtotal
+            order_id = order_id,
+            product_id = order_item.product.id,
+            amount = order_item.amount,
+            subtotal = order_item.subtotal
         )
         
         db.session.add(order_item_model)

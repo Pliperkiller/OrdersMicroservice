@@ -4,7 +4,7 @@ from typing import List
 
 class OrderRepository(ABC):
     @abstractmethod
-    def create(self, order:Order):
+    def create(self, order:Order) -> Order:
         pass
 
     @abstractmethod

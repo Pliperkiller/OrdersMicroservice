@@ -28,7 +28,6 @@ class PgOrderRepository(OrderRepository):
             return None
         
         order = Order(
-            id=order_model.id,
             client_id=order_model.client_id,
             status=order_model.status,
             total_value=order_model.total_value
@@ -42,7 +41,7 @@ class PgOrderRepository(OrderRepository):
         if not order_model:
             return None
         
-        order_model.status = order.status
+        order_model.status = order.status.value
         order_model.total_value = order.total_value
         
         db.session.commit()

@@ -1,15 +1,13 @@
 from src.domain.value_objects.order_status import OrderStatus
 from src.domain.entities.order_item import OrderItem
-class Order:
-    _id_counter = 1
 
+class Order:
     def __init__(self, 
                  client_id : int=None, 
                  status : OrderStatus = OrderStatus.PENDING, 
                  items : list[OrderItem] = None, 
                  total_value : float = 0):
-        self.id = Order._id_counter
-        Order._id_counter += 1
+        self.id = None
         self.client_id = client_id
         self.status = status
         self.items = items if items else []

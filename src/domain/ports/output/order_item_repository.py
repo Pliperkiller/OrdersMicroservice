@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from src.domain.entities.order_item import OrderItem
 class OrderItemRepository(ABC):
     @abstractmethod
-    def create(self, order_item : OrderItem):
+    def create(self, order_id : int ,order_item : OrderItem):
         pass
         
     @abstractmethod
