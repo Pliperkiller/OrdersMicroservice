@@ -1,0 +1,73 @@
+from src.domain.ports.output.order_repository import OrderRepository
+from src.domain.entities.order import Order
+from src.infrastructure.database.models.order_model import OrderModel
+from src.infrastructure.database.models.table_base_model import db
+from typing_extensions import override
+
+
+class OrderRepository(OrderRepository):
+    @override
+    def create(self, order):
+        order_model = OrderModel(
+            client_id=order.client_id,
+            status=order.status,
+            total_value=order.total_value
+        )
+        
+        db.session.add(order_model)
+        db.session.commit()
+        
+        order.id = order_model.id
+        return order
+
+    @override
+    def get_by_id(self, order_id:int):
+        order_model = OrderModel.query.get(order_id)
+        if not order_model:
+            return None
+        
+        order = Order(
+            id=order_model.id,
+            client_id=order_model.client_id,
+            status=order_model.status,
+            total_value=order_model.total_value
+        )
+        
+        return order
+
+    @override
+    def update(self, order_id : int ,order:Order):
+        order_model = OrderModel.query.get(order_id)
+        if not order_model:
+            return None
+        
+        order_model.status = order.status
+        order_model.total_value = order.total_value
+        
+        db.session.commit()
+        return order
+
+    @override
+    def delete(self, order_id:int):
+        order_model = OrderModel.query.get(order_id)
+        if order_model:
+            db.session.delete(order_model)
+            db.session.commit()
+            return True
+        return False
+
+    @override
+    def get_all(self):
+        order_models = OrderModel.query.all()
+        orders = []
+        
+        for order_model in order_models:
+            order = Order(
+                id=order_model.id,
+                client_id=order_model.client_id,
+                status=order_model.status,
+                total_value=order_model.total_value
+            )
+            orders.append(order)
+        
+        return orders

@@ -1,7 +1,10 @@
 from src.domain.entities.product import Product
 
 class OrderItem:
+    _id_counter = 0
     def __init__(self, product:Product=None, amount:int=0):
+        self.id = OrderItem._id_counter
+        OrderItem._id_counter += 1
         self.product = product
         self.amount = amount
         self.subtotal = self.calculate_subtotal()

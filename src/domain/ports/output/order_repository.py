@@ -7,7 +7,7 @@ class OrderRepository(ABC):
         pass
 
     @abstractmethod
-    def get_by_id(self, order_id:int) -> Order:
+    def get_by_id(self, order_id:int):
         pass
 
     @abstractmethod
