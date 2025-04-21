@@ -130,3 +130,40 @@ PedidosMicroService/
 ├── .gitignore
 ├── README.md
 ```
+
+## **Ejecución con Docker**
+
+Puedes ejecutar el proyecto utilizando Docker y Docker Compose. Sigue estos pasos:
+
+1. **Construye y ejecuta los servicios:**
+   ```bash
+   docker-compose up --build
+   ```
+
+2. **Accede a la aplicación:**
+   - La API estará disponible en `http://127.0.0.1:5000`.
+
+3. **Detén los servicios:**
+   ```bash
+   docker-compose down
+   ```
+
+4. **Nota sobre el puerto de la base de datos:**
+   - Si el puerto `5432` ya está en uso en tu máquina, puedes cambiar el puerto externo en el archivo
+
+docker-compose.yml
+
+. Por ejemplo:
+     ```yaml
+     db:
+       ports:
+         - "5433:5432"  # Cambia el puerto externo a 5433
+     ```
+   - Luego, asegúrate de reiniciar los servicios con:
+     ```bash
+     docker-compose down
+     docker-compose up --build
+     ```
+```
+
+---
