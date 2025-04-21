@@ -35,7 +35,6 @@ class PgOrderItemRepository(OrderItemRepository):
         
         order_item = OrderItem(
             id=item_model.id,
-            order_id=item_model.order_id,
             product=product,
             amount=item_model.amount
         )
@@ -64,7 +63,6 @@ class PgOrderItemRepository(OrderItemRepository):
             
             order_item = OrderItem(
                 id=item_model.id,
-                order_id=item_model.order_id,
                 product=product,
                 amount=item_model.amount
             )

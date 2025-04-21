@@ -3,13 +3,14 @@ from src.domain.entities.order_item import OrderItem
 
 class Order:
     def __init__(self, 
-                 client_id : int=None, 
+                 id : int = None,
+                 client_id : int = None, 
                  status : OrderStatus = OrderStatus.PENDING, 
                  items : list[OrderItem] = None, 
                  total_value : float = 0):
-        self.id = None
+        self.id = id
         self.client_id = client_id
-        self.status = status
+        self.status = OrderStatus(status) if isinstance(status, str) else status
         self.items = items if items else []
         self.total_value = total_value
 

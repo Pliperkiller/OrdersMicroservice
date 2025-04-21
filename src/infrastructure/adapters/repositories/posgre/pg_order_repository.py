@@ -3,6 +3,8 @@ from src.domain.entities.order import Order
 from src.domain.value_objects.order_status import OrderStatus, get_order_status_from_str
 from src.infrastructure.database.models.order_model import OrderModel
 from src.infrastructure.database.models.table_base_model import db
+from src.infrastructure.database.models.order_item_model import OrderItemModel
+from src.infrastructure.adapters.repositories.posgre.pg_order_item_repository import PgOrderItemRepository
 from typing_extensions import override
 
 
@@ -27,12 +29,19 @@ class PgOrderRepository(OrderRepository):
         if not order_model:
             return None
         
+        order_items = PgOrderItemRepository().get_by_order_id(order_id)
+        order_items = [item for item in order_items]
+        
         order = Order(
+            id=order_model.id,
             client_id=order_model.client_id,
             status=order_model.status,
+            items=order_items,
             total_value=order_model.total_value
         )
         
+
+
         return order
 
     @override

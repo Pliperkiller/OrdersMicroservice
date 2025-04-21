@@ -7,6 +7,7 @@ from src.application.usecases.delete_order_usecase_impl import DeleteOrderUseCas
 from src.application.usecases.get_order_usecase_impl import GetOrderUsecaseImpl
 from src.application.usecases.update_order_usecase_impl import UpdateOrderUsecaseImpl
 from src.application.services.order_service import OrderService
+from src.domain.exceptions.invalid_order_data_exception import InvalidOrderDataException
 from typing_extensions import override
 
 class OrderServiceImpl(OrderService):
@@ -25,6 +26,13 @@ class OrderServiceImpl(OrderService):
 
     @override
     def create_order(self, client_id, order_items):
+        if not order_items:
+            raise InvalidOrderDataException("Order must have at least one item.")
+
+        for item in order_items:
+            if item["amount"] <= 0:
+                raise InvalidOrderDataException(f"Invalid amount: {item['amount']} for product {item['product_id']}")
+            
         return self.create_order_usecase.create_order(client_id, order_items)
     
     @override

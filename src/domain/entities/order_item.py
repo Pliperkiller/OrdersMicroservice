@@ -1,8 +1,11 @@
 from src.domain.entities.product import Product
 
 class OrderItem:
-    def __init__(self, product:Product=None, amount:int=0):
-        self.id = None
+    def __init__(self, 
+                 id : int = None,
+                 product : Product = None, 
+                 amount : int = 0):
+        self.id = id
         self.product = product
         self.amount = amount
         self.subtotal = self.calculate_subtotal()

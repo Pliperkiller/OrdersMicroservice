@@ -30,7 +30,7 @@ class CreateOrderUsecaseImpl(CreateOrderUsecase):
             amount = item['amount']
             product = self.product_repository.get_by_id(product_id)
             
-            order_item = OrderItem(product, amount)
+            order_item = OrderItem(product=product, amount=amount)
             items.append(order_item)
 
             builder.add_item(order_item)

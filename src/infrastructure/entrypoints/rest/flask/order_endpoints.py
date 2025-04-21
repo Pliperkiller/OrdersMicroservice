@@ -37,14 +37,14 @@ class OrderEndpoints:
             response, status = self.order_controller.delete_order(order_id)
             return jsonify(response), status
 
-        @self.blueprint.route('/health', methods=['GET'])
-        def health_check():
-            return jsonify({"status": "API is running"}), 200
+        # @self.blueprint.route('/health', methods=['GET'])
+        # def health_check():
+        #     return jsonify({"status": "API is running"}), 200
 
-        @self.blueprint.route('/health/db', methods=['GET'])
-        def database_health_check():
-            try:
-                db.session.execute(text('SELECT 1'))
-                return jsonify({"status": "Database connection is healthy"}), 200
-            except Exception as e:
-                return jsonify({"status": "Database connection failed", "error": str(e)}), 500
+        # @self.blueprint.route('/health/db', methods=['GET'])
+        # def database_health_check():
+        #     try:
+        #         db.session.execute(text('SELECT 1'))
+        #         return jsonify({"status": "Database connection is healthy"}), 200
+        #     except Exception as e:
+        #         return jsonify({"status": "Database connection failed", "error": str(e)}), 500

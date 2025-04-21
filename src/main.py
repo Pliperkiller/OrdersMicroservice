@@ -27,21 +27,19 @@ def create_app():
     app.register_blueprint(order_endpoints.blueprint, url_prefix='/api/v1')
 
     with app.app_context():
-        if app.config['DEBUG']:
-          from seed import seed_products
-          # Eliminar registros de todas las tablas
-          db.session.query(OrderItemModel).delete()
-          db.session.query(OrderModel).delete()
-          db.session.query(ProductModel).delete()
-          db.session.commit()
-
-          # Insertar datos de prueba
-          product_seed = seed_products.products
-          for product in product_seed:
-              db.session.add(product)
-          db.session.commit()
-
         db.create_all()
+        if app.config['DEBUG']:
+            from seed import seed_products
+            # Eliminar registros de todas las tablas
+            db.drop_all()
+            db.create_all()
+            # Insertar datos de prueba
+            product_seed = seed_products.products
+            for product in product_seed:
+                db.session.add(product)
+                db.session.commit()
+
+        
     return app
 
 if __name__ == '__main__':
