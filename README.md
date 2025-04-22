@@ -1,4 +1,4 @@
-# Pedidos MicroService
+# Orders MicroService
 
 Este proyecto es un microservicio para la gestión de pedidos, desarrollado en Python utilizando Flask. Proporciona endpoints RESTful para crear, actualizar, eliminar y consultar pedidos, así como para gestionar los elementos de los pedidos y los productos.
 
