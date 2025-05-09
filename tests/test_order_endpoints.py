@@ -159,3 +159,20 @@ def test_delete_order_not_found(client):
 
     # Verifica el mensaje de error
     assert response_data['error'] == "Pedido no encontrado"
+
+def test_create_order_publishes_message(client, mocker):
+    # Mock del adaptador de RabbitMQ
+    mock_broker = mocker.patch('src.infrastructure.adapters.message_broker.rabbitmq_message_broker.RabbitMQMessageBroker.publish')
+
+    # Datos del pedido
+    order_data = {
+        "client_id": 123,
+        "items": [{"product_id": 1, "amount": 2}, {"product_id": 2, "amount": 1}]
+    }
+
+    # Crear el pedido
+    response = client.post('/api/v1/orders', json=order_data)
+    assert response.status_code == 201
+
+    # Verificar que se haya llamado al método publish con los datos correctos
+    mock_broker.assert_called_once_with("order_items_queue", {"items": order_data["items"]})

@@ -4,19 +4,21 @@ from src.domain.ports.output.order_item_repository import OrderItemRepository
 from src.domain.ports.output.product_repository import ProductRepository
 from src.domain.entities.order_item import OrderItem
 from src.domain.entities.factories.order_builder import OrderBuilder
-from src.domain.entities.order import Order
 from typing_extensions import override
 from typing import List, Dict
+from src.domain.ports.output.message_broker import MessageBroker
 
 class CreateOrderUsecaseImpl(CreateOrderUsecase):
     def __init__(self,
                  order_repository : OrderRepository,
                  order_item_repository : OrderItemRepository,
-                 product_repository : ProductRepository
+                 product_repository : ProductRepository,
+                 message_broker: MessageBroker
                  ):
         self.order_repository = order_repository
         self.order_item_repository = order_item_repository
         self.product_repository = product_repository
+        self.message_broker = message_broker
 
     @override
     def create_order(self, client_id: int, order_items: List[Dict[str, int]]):
@@ -41,5 +43,7 @@ class CreateOrderUsecaseImpl(CreateOrderUsecase):
 
         for item in items:
             self.order_item_repository.create(created_order.id,item)
+
+        self.message_broker.publish("order_items_queue", {"items": order_items})
 
         return order
